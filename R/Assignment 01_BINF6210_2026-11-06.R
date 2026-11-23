@@ -50,7 +50,6 @@ df_trich_s9$matching_class |> unique()
 non_te_s9 = c("Simple_repeat", "Satellite", "Low_complexity", "rRNA", "snRNA",
               "ARTEFACT", "Unknown")
 
-# visualizing the number of TEs per contig
 df_trich_sp |> 
   group_by(qry_id) |> 
   summarise(count = n()) |> # this is the number of TEs per contig
@@ -106,6 +105,7 @@ new_sp |>
 new_s9 <- df_trich_s9 |> 
   filter(matching_class %notin% non_te_s9) |>
   mutate(class_te = if_else(matching_class %in% retro_s9, "retrotrans", "DNAtrans")) 
+
 new_s9 |>
   ggplot(aes( x = perc_del, y = perc_div, colour = class_te)) +
   geom_point() +
@@ -162,7 +162,7 @@ common_te <- c("DNA/MULE-MuDR", "DNA/PIF-Harbinger", "DNA/TcMar-Tc1", "LINE/CR1"
 
 df_common_te <- df_all_te |>
   filter(matching_class %in% common_te)
-df_common_te
+df_common_te] /
 
 df_common_te |>
   ggplot(aes(x = matching_class, y = perc_div, fill = species)) +
@@ -286,3 +286,5 @@ te_composition |>
   tail(5) |>
   summarise(top_five_percentage = sum(percentage))
 # Gives us the combined percentage of top five, %91.7
+
+
