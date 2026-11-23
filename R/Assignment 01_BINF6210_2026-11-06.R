@@ -111,12 +111,6 @@ new_s9 |>
   geom_point() +
   geom_smooth()
 
-
-#sk# i liked how you compared percent del and percent div for the two species. i added a wilcoxon test for statistical analysis based on what we did in my code to measure the differences in divergence for transposons and retrosposons for spiralis and T9 and compare them by the p value to each other. wilcoxon tests need the p value to be below 0.05 to say the species are different, and since p values are above 0.05 we can say they are not significantly different
-
-wilcox.test(perc_div ~ class_te, data = df_all_te |> filter(species == "spiralis"))
-wilcox.test(perc_div ~ class_te, data = df_all_te |> filter(species == "T9"))
-
 # do TE families evolve differently
 # compare  perc del vs perc div of DNA trans between species
 # need to have a column with species
@@ -292,7 +286,5 @@ te_composition |>
   tail(5) |>
   summarise(top_five_percentage = sum(percentage))
 # Gives us the combined percentage of top five, %91.7
-
-
 
 
