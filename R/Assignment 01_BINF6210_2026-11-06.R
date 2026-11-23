@@ -50,7 +50,6 @@ df_trich_s9$matching_class |> unique()
 non_te_s9 = c("Simple_repeat", "Satellite", "Low_complexity", "rRNA", "snRNA",
               "ARTEFACT", "Unknown")
 
-# visualizing the number of TEs per contig
 df_trich_sp |> 
   group_by(qry_id) |> 
   summarise(count = n()) |> # this is the number of TEs per contig
@@ -106,10 +105,17 @@ new_sp |>
 new_s9 <- df_trich_s9 |> 
   filter(matching_class %notin% non_te_s9) |>
   mutate(class_te = if_else(matching_class %in% retro_s9, "retrotrans", "DNAtrans")) 
+
 new_s9 |>
   ggplot(aes( x = perc_del, y = perc_div, colour = class_te)) +
   geom_point() +
   geom_smooth()
+
+
+#sk# i liked how you compared percent del and percent div for the two species. i added a wilcoxon test for statistical analysis based on what we did in my code to measure the differences in divergence for transposons and retrosposons for spiralis and T9 and compare them by the p value to each other. wilcoxon tests need the p value to be below 0.05 to say the species are different, and since p values are above 0.05 we can say they are not significantly different
+
+wilcox.test(perc_div ~ class_te, data = df_all_te |> filter(species == "spiralis"))
+wilcox.test(perc_div ~ class_te, data = df_all_te |> filter(species == "T9"))
 
 # do TE families evolve differently
 # compare  perc del vs perc div of DNA trans between species
@@ -162,7 +168,7 @@ common_te <- c("DNA/MULE-MuDR", "DNA/PIF-Harbinger", "DNA/TcMar-Tc1", "LINE/CR1"
 
 df_common_te <- df_all_te |>
   filter(matching_class %in% common_te)
-df_common_te
+df_common_te] /
 
 df_common_te |>
   ggplot(aes(x = matching_class, y = perc_div, fill = species)) +
@@ -286,3 +292,7 @@ te_composition |>
   tail(5) |>
   summarise(top_five_percentage = sum(percentage))
 # Gives us the combined percentage of top five, %91.7
+
+
+
+
