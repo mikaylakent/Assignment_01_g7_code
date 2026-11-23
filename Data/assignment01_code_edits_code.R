@@ -7,6 +7,9 @@
 ##
 ##***************************
 
+## comments made by me (sumayyah) start with #sk#
+
+
 ## _ Packages used -------
 library(tidyverse)
 conflicted::conflicts_prefer(dplyr::filter())
